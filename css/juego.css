@@ -1,0 +1,232 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Courier New', Courier, monospace;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background: linear-gradient(135deg, #ffd1e3, #49b0d8, #ffc2dc);
+}
+
+/* ---------- CORAZONES (hechos solo con CSS) ---------- */
+
+.corazones {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.corazon {
+    position: absolute;
+    width: var(--t, 30px);
+    height: var(--t, 30px);
+    background: var(--c, #2193c0);
+    transform: rotate(-45deg);
+}
+
+.corazon::before,
+.corazon::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    border-radius: 50%;
+}
+
+.corazon::before { top: -50%; left: 0; }
+.corazon::after  { top: 0; left: 50%; }
+
+/* Corazones que suben flotando */
+.corazones .corazon {
+    bottom: -60px;
+    opacity: 0.55;
+    animation: flotar var(--d, 10s) linear var(--r, 0s) infinite;
+}
+
+@keyframes flotar {
+    0%   { transform: translateY(0) rotate(-45deg); opacity: 0; }
+    10%  { opacity: 0.6; }
+    90%  { opacity: 0.6; }
+    100% { transform: translateY(-115vh) rotate(-25deg); opacity: 0; }
+}
+
+/* ---------- TARJETA ---------- */
+
+.contenedor-juego {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.tarjeta-juego {
+    position: relative;
+    width: 100%;
+    max-width: 560px;
+    min-height: 420px;
+    padding: 50px 35px 40px;
+    background: linear-gradient(180deg, #fff5f9, #ffe3ee);
+    border: 4px solid #fff;
+    border-radius: 30px;
+    box-shadow: 0 20px 45px rgba(255, 79, 147, 0.45);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+}
+
+/* Corazones fijos en las esquinas de la tarjeta */
+.corazon.deco {
+    --t: 34px;
+    opacity: 0.9;
+}
+
+.deco1 { top: 28px;  left: 28px;  --c: #ee73a2; }
+.deco2 { bottom: 38px; right: 28px; --c: #c48198; }
+
+.contador {
+    font-size: 14px;
+    color: #d6407f;
+    letter-spacing: 1px;
+}
+
+.pregunta {
+    font-size: 26px;
+    color: #b8236a;
+    line-height: 1.4;
+    min-height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ---------- BOTONES ---------- */
+
+.botones {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+}
+
+.btn {
+    font-family: inherit;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 14px 40px;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.35s ease, background 0.2s ease;
+}
+
+.btn-si {
+    background: linear-gradient(135deg, #d46489, #ff3d8b);
+    color: #fff;
+    position: relative;
+    z-index: 5;
+    transform-origin: center;
+}
+
+.btn-si:hover {
+    background: linear-gradient(135deg, #ff4f93, #e8307a);
+}
+
+.btn-no {
+    background: #ffd6e6;
+    color: #b8236a;
+}
+
+.btn-no:hover {
+    background: #ffc2dc;
+}
+
+/* El "Sí" ocupa toda la pantalla */
+.btn-si.pantalla-completa {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+    font-size: clamp(60px, 18vw, 220px);
+    transform: none;
+    z-index: 100;
+}
+
+/* ---------- PANTALLA FINAL ---------- */
+
+.final {
+    display: none;
+}
+
+.final h2 {
+    font-size: 28px;
+    color: #b8236a;
+    margin-bottom: 15px;
+}
+
+.final p {
+    font-size: 17px;
+    color: #7a2250;
+    line-height: 1.6;
+}
+
+.tarjeta-juego.terminado .contador,
+.tarjeta-juego.terminado .pregunta,
+.tarjeta-juego.terminado .botones {
+    display: none;
+}
+
+.tarjeta-juego.terminado .final {
+    display: block;
+    animation: aparecer 0.8s ease both;
+}
+
+@keyframes aparecer {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Sacudida de la tarjeta cuando presiona "No" */
+.tarjeta-juego.sacudir {
+    animation: sacudir 0.4s ease;
+}
+
+@keyframes sacudir {
+    0%, 100% { transform: translateX(0); }
+    25%      { transform: translateX(-8px); }
+    75%      { transform: translateX(8px); }
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media (max-width: 600px) {
+    .tarjeta-juego {
+        padding: 45px 20px 35px;
+        min-height: 400px;
+    }
+
+    .pregunta {
+        font-size: 21px;
+        min-height: 90px;
+    }
+
+    .btn {
+        font-size: 17px;
+        padding: 12px 28px;
+    }
+}

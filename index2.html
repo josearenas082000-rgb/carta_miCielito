@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preguntas</title>
+    <link rel="stylesheet" href="CSS/juego.css">
+</head>
+<body>
+
+    <!-- Corazones flotando de fondo (los crea el JS) -->
+    <div class="corazones" id="corazones"></div>
+
+    <div class="contenedor-juego">
+        <div class="tarjeta-juego" id="tarjeta">
+
+            <!-- Corazones decorativos de la tarjeta -->
+            <span class="corazon deco deco1"></span>
+            <span class="corazon deco deco2"></span>
+
+            <p class="contador" id="contador">preguntas capciosas 🧐</p>
+
+            <h2 class="pregunta" id="pregunta">Aquí va la pregunta</h2>
+
+            <div class="botones" id="botones">
+                <button class="btn btn-si" id="btnSi">Sí</button>
+                <button class="btn btn-no" id="btnNo">No</button>
+            </div>
+
+            <!-- Pantalla final -->
+            <div class="final" id="final">
+                <h2>¡Sabía que dirías que sí mi cielito lindo ! 🤭 🩵</h2>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="JS/juego.js"></script>
+</body>
+</html>

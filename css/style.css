@@ -1,0 +1,331 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Courier New', Courier, monospace;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+.img-fondo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+}
+
+.contenedor-principal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    width: 100%;
+    z-index: 1;
+}
+
+.tarjeta-flotante {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    height: 550px;
+    background-color: #f4efe6;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    padding: 40px 30px;
+    overflow: visible;
+    perspective: 1800px; /* da profundidad al giro de la hoja */
+
+    background-image: linear-gradient(#d6c9b5 1px, transparent 1px);
+    background-size: 100% 30px;
+}
+
+.contenido-texto {
+    position: relative;
+    z-index: 1;
+}
+
+.contenido-texto h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #333;
+    text-align: center;
+}
+
+.contenido-texto p {
+    font-size: 15px;
+    color: #444;
+    line-height: 30px;
+}
+
+/* ---------- STICKERS ---------- */
+
+.recorte {
+    position: absolute;
+    filter: drop-shadow(3px 5px 4px rgba(0, 0, 0, 0.3));
+    z-index: 10;
+}
+
+.sticker-top {
+    top: -100px;
+    left: -100px;
+    width: 150px;
+    transform: rotate(-10deg);
+}
+
+.sticker-yakult {
+    top: 180px;
+    left: -110px;
+    width: 150px;
+    transform: rotate(-5deg);
+}
+
+.sticker-cat1 {
+    bottom: 5px;
+    left: -20px;
+    width: 120px;
+    transform: rotate(8deg);
+}
+
+.sticker-banana {
+    top: 400px;
+    right: -50px;
+    width: 190px;
+    transform: rotate(15deg);
+}
+
+.kaleth-morales {
+    top: -50px;
+    right: -150px;
+    width: 200px;
+    transform: rotate(-10deg);
+}
+
+.kaleth {
+    top: 150px;
+    right: -400px;
+    width: 400px;
+    transform: rotate(-5deg);
+}
+
+.kaleth2 {
+    top: 140px;
+    left: -400px;
+    width: 400px;
+    transform: rotate(8deg);
+}
+
+.kaleth3 {
+    top: 500px;
+    right: -400px;
+    width: 350px;
+    transform: rotate(15deg);
+}
+
+/* ---------- EFECTO PASAR PÁGINA ---------- */
+
+.hoja-volteo {
+    display: none;
+    position: absolute;
+    inset: 0;
+    padding: 40px 30px;
+    border-radius: 15px;
+    background-color: #f4efe6;
+    background-image: linear-gradient(#d6c9b5 1px, transparent 1px);
+    background-size: 100% 30px;
+    transform-origin: left center; /* gira desde el borde izquierdo */
+    backface-visibility: hidden;
+    pointer-events: none;
+    z-index: 5; /* encima del texto, debajo de los stickers */
+}
+
+.hoja-volteo h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #333;
+    text-align: center;
+}
+
+.hoja-volteo p {
+    font-size: 15px;
+    color: #444;
+    line-height: 30px;
+}
+
+.hoja-volteo.volteando {
+    display: block;
+    animation: pasarHoja 0.9s ease-in-out forwards;
+}
+
+@keyframes pasarHoja {
+    0% {
+        transform: rotateY(0deg);
+        filter: brightness(1);
+        box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    }
+    50% {
+        filter: brightness(0.9);
+        box-shadow: -20px 10px 30px rgba(0, 0, 0, 0.35);
+    }
+    100% {
+        transform: rotateY(-180deg);
+        filter: brightness(0.8);
+        box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    }
+}
+
+/* Entrada suave del contenido nuevo */
+.contenido-texto.nuevo {
+    animation: aparecer 0.6s ease both;
+}
+
+@keyframes aparecer {
+    from { opacity: 0.2; }
+    to   { opacity: 1; }
+}
+
+/* ---------- BOTÓN ---------- */
+
+.boton-siguiente {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 24px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: bold;
+    color: #fff;
+    background: #ff6fa5;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s ease, background 0.2s ease;
+    z-index: 20; /* por encima de todo, incluso los stickers */
+}
+
+.boton-siguiente:hover {
+    background: #ff4f93;
+    transform: scale(1.08);
+}
+
+.boton-siguiente:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media (max-width: 768px) {
+    .contenedor-principal {
+        padding: 10px;
+    }
+
+    .tarjeta-flotante {
+        max-width: 100%;
+        height: auto;
+        min-height: 480px;
+        padding: 30px 20px;
+    }
+
+    .hoja-volteo {
+        padding: 30px 20px;
+    }
+
+    .boton-siguiente {
+        bottom: 15px;
+        right: 15px;
+    }
+
+    .recorte {
+        max-width: 35vw;
+    }
+
+    .sticker-top {
+        top: -50px;
+        left: -20px;
+        width: 100px;
+    }
+
+    .sticker-yakult {
+        top: 120px;
+        left: -30px;
+        width: 110px;
+    }
+
+    .sticker-cat1 {
+        bottom: -15px;
+        left: -10px;
+        width: 90px;
+    }
+
+    .sticker-banana {
+        top: auto;
+        bottom: -20px;
+        right: -15px;
+        width: 110px;
+    }
+
+    .kaleth-morales {
+        top: -40px;
+        right: -20px;
+        width: 110px;
+    }
+
+    .kaleth {
+        top: 80px;
+        right: -30px;
+        width: 140px;
+    }
+
+    .kaleth2 {
+        top: 250px;
+        left: -30px;
+        width: 130px;
+    }
+
+    .kaleth3 {
+        top: 380px;
+        right: -20px;
+        width: 130px;
+    }
+}
+
+.boton-continuar {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 24px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 15px;
+    font-weight: bold;
+    color: #fff;
+    background: #ff6fa5;
+    border-radius: 999px;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s ease, background 0.2s ease;
+    z-index: 50;
+}
+
+.boton-continuar:hover {
+    background: #ff4f93;
+    transform: scale(1.08);
+}
+
+@media (max-width: 768px) {
+    .boton-continuar {
+        top: 12px;
+        right: 12px;
+        padding: 8px 18px;
+        font-size: 14px;
+    }
+}
